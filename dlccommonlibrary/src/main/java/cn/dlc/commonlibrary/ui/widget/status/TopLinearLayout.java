@@ -3,7 +3,6 @@ package cn.dlc.commonlibrary.ui.widget.status;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,8 +16,8 @@ import cn.dlc.commonlibrary.R;
 
 public class TopLinearLayout extends LinearLayout {
 
-    private boolean mFitStatusBar;
     private int mNewHeightSpec;
+    private StatusDelegate mStatusDelegate;
 
     public TopLinearLayout(@NonNull Context context) {
         this(context, null);
@@ -32,12 +31,13 @@ public class TopLinearLayout extends LinearLayout {
         @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        mStatusDelegate = new StatusDelegate(context);
+
         setOrientation(VERTICAL);
 
-        mFitStatusBar = true;
-
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TopLinearLayout);
-        mFitStatusBar = ta.getBoolean(R.styleable.TopLinearLayout_fitStatusBar, true);
+        mStatusDelegate.setFitStatusBar(
+            ta.getBoolean(R.styleable.TopLinearLayout_fitStatusBar, true));
         ta.recycle();
 
         mNewHeightSpec = 0;
@@ -46,14 +46,10 @@ public class TopLinearLayout extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        if (mFitStatusBar
-            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-            && mNewHeightSpec == 0) {
+        if (mStatusDelegate.toFitStatusBar() && mNewHeightSpec == 0) {
             try {
-                Resources resources = getResources();
-                int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-                int statusHeight = resources.getDimensionPixelSize(resourceId);
-                int height = MeasureSpec.getSize(heightMeasureSpec) + statusHeight;
+                int height =
+                    MeasureSpec.getSize(heightMeasureSpec) + mStatusDelegate.getStatusHeight();
                 mNewHeightSpec =
                     MeasureSpec.makeMeasureSpec(height, MeasureSpec.getMode(heightMeasureSpec));
             } catch (Resources.NotFoundException e) {

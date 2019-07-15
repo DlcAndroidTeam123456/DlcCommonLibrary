@@ -31,13 +31,15 @@ public class UnicodeUtil {
                     } catch (NumberFormatException localNumberFormatException) {
                         retBuf.append(unicodeStr.charAt(i));
                     }
+                } else if (i < maxLoop - 1 && unicodeStr.charAt(i + 1) == '/') {
+                    retBuf.append(unicodeStr.charAt(++i));
                 } else {
                     retBuf.append(unicodeStr.charAt(i));
                 }
-            } else if (unicodeStr.charAt(i) == '/' && i > 0 && unicodeStr.charAt(i - 1) == '\\') {
+            }/* else if (unicodeStr.charAt(i) == '/' && i > 0 && unicodeStr.charAt(i - 1) == '\\') {
                 // 用来排除掉http斜杆的转义
                 // 什么都不干
-            } else {
+            }*/ else {
                 retBuf.append(unicodeStr.charAt(i));
             }
         }

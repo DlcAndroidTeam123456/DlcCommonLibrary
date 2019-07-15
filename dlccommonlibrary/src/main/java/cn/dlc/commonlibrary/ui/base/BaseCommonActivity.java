@@ -15,13 +15,17 @@ import butterknife.Unbinder;
 import cn.dlc.commonlibrary.R;
 import cn.dlc.commonlibrary.ui.base.mvp.UiView;
 import cn.dlc.commonlibrary.ui.dialog.WaitingDialog;
+import cn.dlc.commonlibrary.ui.dialog.WaitingDialogImpl;
+import cn.dlc.commonlibrary.utils.BindEventBus;
 import cn.dlc.commonlibrary.utils.ToastUtil;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import me.yokeyword.fragmentation.ISupportActivity;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 基础Activity，建议继承此类再写一个BaseActivity
  */
-public abstract class BaseCommonActivity extends RxAppCompatActivity implements UiView {
+public abstract class BaseCommonActivity extends BaseFragmentationActivity
+    implements UiView, ISupportActivity {
 
     private Unbinder mUnbinder;
     private WaitingDialog mWaitingDialog;
@@ -35,17 +39,31 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
      */
     protected boolean mActivityResumed;
 
+    /**
+     * 获取布局xml的id, 子类实现，可以为0
+     *
+     * @return
+     */
+    @LayoutRes
+    protected abstract int getLayoutId();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         beforeSetContentView();
-        if (getLayoutID() != 0) {// 子类设置布局id使用,
-            setContentView(getLayoutID());
+        if (getLayoutId() != 0) {// 子类设置布局id使用,
+            setContentView(getLayoutId());
         }
 
         if (useButterKnife()) {
             //所有的ButterKnife绑定让父类完成
             mUnbinder = ButterKnife.bind(this);
+        }
+
+        afterSetContentView();
+
+        if (toRegisterEventBus()) {
+            registerEventBus();
         }
     }
 
@@ -54,6 +72,44 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
      */
     protected void beforeSetContentView() {
         // 在设置布局前执行
+    }
+
+    /**
+     * 在设置布局后执行,用来初始化特殊的逻辑
+     */
+    private void afterSetContentView() {
+        // 空实现
+    }
+
+    /**
+     * 需要注册EventBus
+     *
+     * @return
+     */
+    protected boolean toRegisterEventBus() {
+        return this.getClass().isAnnotationPresent(BindEventBus.class);
+    }
+
+    /**
+     * 注册EventBus
+     */
+    protected void registerEventBus() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    /**
+     * 反注册EventBus
+     */
+    protected void unregisterEventBus() {
+        try {
+            if (EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
     }
 
     @Override
@@ -83,12 +139,11 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
     @Override
     protected void onDestroy() {
 
+        unregisterEventBus();
+        dismissWaitingDialog();
         super.onDestroy();
-
         // 在解绑控件前，先释放，避免 NullPointerException
         onDestroyUnbindView();
-
-        dismissWaitingDialog();
 
         if (useButterKnife()) {
             mUnbinder.unbind();//在页面销毁时解绑
@@ -139,14 +194,6 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
         return true;
     }
 
-    /**
-     * 获取布局xml的id, 子类实现，可以为0
-     *
-     * @return
-     */
-    @LayoutRes
-    protected abstract int getLayoutID();
-
     @Override
     public Activity getActivity() {
         return this;
@@ -187,19 +234,25 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
         ToastUtil.showOne(this, text);
     }
 
+    /**
+     * 获取等待对话框实例，可以重写这个方法以实现自己的等待对话框
+     *
+     * @return
+     */
+    protected WaitingDialog getWaitingDialogInstance() {
+        return WaitingDialogImpl.newDialog(this);
+    }
+
     @Override
     public void showWaitingDialog(String text, boolean cancelable) {
         if (mWaitingDialog == null) {
-            mWaitingDialog = WaitingDialog.newDialog(this).setMessage(text);
+            mWaitingDialog = getWaitingDialogInstance();
         }
         if (mWaitingDialog.isShowing()) {
             mWaitingDialog.dismiss();
         }
 
-        mWaitingDialog.setMessage(text);
-
-        mWaitingDialog.setCancelable(cancelable);
-        mWaitingDialog.show();
+        mWaitingDialog.setMessage(text).setCancelable(cancelable).show();
     }
 
     @Override
@@ -209,8 +262,12 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
 
     @Override
     public void dismissWaitingDialog() {
-        if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
-            mWaitingDialog.dismiss();
+        try {
+            if (mWaitingDialog != null && mWaitingDialog.isShowing()) {
+                mWaitingDialog.dismiss();
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
         }
     }
 
@@ -241,7 +298,7 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
 
     // 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘
     private boolean hideKeyboard(View view, MotionEvent event) {
-        if (view != null && (view instanceof EditText)) {
+        if ((view instanceof EditText)) {
 
             int[] location = { 0, 0 };
             view.getLocationInWindow(location);
@@ -257,5 +314,37 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
             return !isInEt;
         }
         return false;
+    }
+
+    /**
+     * 隐藏状态栏和导航栏
+     */
+    private void hideSystemUI() {
+
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            // Set the content to appear under the system bars so that the
+            // content doesn't resize when the system bars hide and show.
+            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            // Hide the nav bar and status bar
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    /**
+     * 显示状态栏和导航栏
+     */
+    private void showSystemUI() {
+        // Shows the system bars by removing all the flags
+        // except for the ones that make the content appear under the system bars.
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 }

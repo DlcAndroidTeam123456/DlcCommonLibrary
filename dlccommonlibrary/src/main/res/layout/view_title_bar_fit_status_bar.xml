@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:layout_height="48dp">
 
-    <cn.dlc.commonlibrary.ui.widget.status.StatusHolderView
-        android:id="@+id/statusHolder"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+    <!--状态栏参考线-->
+    <android.support.constraint.Guideline
+        android:id="@+id/statusGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusGuideline">
 
         <TextView
             android:id="@+id/titleText"
@@ -21,18 +28,21 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:maxWidth="250dp"
+            android:maxWidth="@dimen/default_title_max_width"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/title_text_size"
+            android:textSize="@dimen/default_title_text_size"
             tools:text="时光胶囊哈哈哈哈哈哈哈哈" />
 
-        <ImageButton
+        <com.licheedev.rateview.RateImageButton
             android:id="@+id/leftImage"
             android:layout_width="48dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_arrow_left"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:according_width="false"
+            app:height_rate="1"
+            app:width_rate="1"
+            android:src="@mipmap/ic_arrow_left" />
 
         <TextView
             android:id="@+id/leftText"
@@ -40,20 +50,23 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:gravity="center"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="@dimen/default_text_button_padding"
+            android:paddingRight="@dimen/default_text_button_padding"
             android:textColor="@color/black"
-            android:textSize="@dimen/title_button_text_size"
+            android:textSize="@dimen/default_title_button_text_size"
             android:visibility="gone"
             tools:text="哈哈哈" />
 
 
-        <ImageButton
+        <com.licheedev.rateview.RateImageButton
             android:id="@+id/rightImage"
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:visibility="visible"
+            app:according_width="false"
+            app:height_rate="1"
+            app:width_rate="1"
             tools:src="@mipmap/ic_arrow_right" />
 
         <TextView
@@ -64,22 +77,23 @@
             android:background="@drawable/clickable_bg"
             android:clickable="true"
             android:gravity="center"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="@dimen/default_text_button_padding"
+            android:paddingRight="@dimen/default_text_button_padding"
             android:textColor="@color/black"
-            android:textSize="@dimen/title_button_text_size"
+            android:textSize="@dimen/default_title_button_text_size"
             android:visibility="gone"
             tools:text="哈哈哈" />
 
         <View
             android:id="@+id/bottomLine"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/default_bottom_line_height"
             android:layout_gravity="bottom"
             android:background="@color/line_color" />
+
     </FrameLayout>
 
-</LinearLayout>
+</merge>
 
 
 

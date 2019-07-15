@@ -11,15 +11,25 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.dlc.commonlibrary.ui.base.mvp.UiView;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import cn.dlc.commonlibrary.utils.BindEventBus;
+import me.yokeyword.fragmentation.ISupportFragment;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 基础Fragment，建议继承此类再写一个BaseFragment
  */
-public abstract class BaseCommonFragment extends RxFragment implements UiView {
+public abstract class BaseCommonFragment extends BaseFragmentationFragment
+    implements UiView, ISupportFragment {
 
     protected Activity mActivity;
     private Unbinder mUnBinder;
+
+    /**
+     * 设置视图资源id
+     *
+     * @return
+     */
+    protected abstract int getLayoutId();
 
     @Override
     public void onAttach(Context context) {
@@ -37,18 +47,19 @@ public abstract class BaseCommonFragment extends RxFragment implements UiView {
             view = inflater.inflate(getLayoutId(), container, false);
             mUnBinder = ButterKnife.bind(this, view);
         }
+
+        if (toRegisterEventBus()) {
+            registerEventBus();
+        }
+
         return view;
     }
 
-    /**
-     * 设置视图资源id
-     *
-     * @return
-     */
-    protected abstract int getLayoutId();
-
     @Override
     public void onDestroyView() {
+
+        unregisterEventBus();
+
         super.onDestroyView();
 
         // 在解绑控件前，先释放，避免 NullPointerException
@@ -56,6 +67,35 @@ public abstract class BaseCommonFragment extends RxFragment implements UiView {
 
         if (mUnBinder != null) {
             mUnBinder.unbind();
+        }
+    }
+
+    /**
+     * 需要注册EventBus
+     *
+     * @return
+     */
+    protected boolean toRegisterEventBus() {
+        return this.getClass().isAnnotationPresent(BindEventBus.class);
+    }
+
+    /**
+     * 注册EventBus
+     */
+    protected void registerEventBus() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    /**
+     * 反注册EventBus
+     */
+    protected void unregisterEventBus() {
+        try {
+            EventBus.getDefault().unregister(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

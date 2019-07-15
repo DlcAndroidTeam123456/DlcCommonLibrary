@@ -112,4 +112,28 @@ public class EmptyRecyclerView extends RecyclerView.AdapterDataObserver {
             mEmptyView.setVisibility(hideEmpty ? View.GONE : View.VISIBLE);
         }
     }
+
+    /**
+     * 强制隐藏空白布局
+     *
+     * @return
+     */
+    public EmptyRecyclerView hindEmptyView() {
+        if (mEmptyView != null) {
+            mEmptyView.setVisibility(View.GONE);
+        }
+        return this;
+    }
+
+    /**
+     * 强制显示空白布局
+     *
+     * @return
+     */
+    public EmptyRecyclerView showEmptyView() {
+        if (mEmptyView != null) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+        return this;
+    }
 }

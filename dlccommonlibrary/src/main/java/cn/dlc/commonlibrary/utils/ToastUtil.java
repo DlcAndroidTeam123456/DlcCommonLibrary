@@ -1,7 +1,6 @@
 package cn.dlc.commonlibrary.utils;
 
 import android.content.Context;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.ref.WeakReference;
 
@@ -18,13 +17,10 @@ public class ToastUtil {
     public static void showOne(Context context, String text) {
         Toast toast;
         if (mToastRef != null && (toast = mToastRef.get()) != null) {
-            toast.setDuration(Toast.LENGTH_SHORT);
-            TextView tv = (TextView) toast.getView().findViewById(android.R.id.message);
-            tv.setText(text);
-        } else {
-            toast = Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_SHORT);
-            mToastRef = new WeakReference<>(toast);
+            toast.cancel();
         }
+        toast = Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_SHORT);
+        mToastRef = new WeakReference<>(toast);
         toast.show();
     }
 

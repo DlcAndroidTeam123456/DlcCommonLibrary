@@ -8,9 +8,14 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 3
-        versionName "1.0.28.1"
+        versionCode 4
+        versionName "1.0.29.2-simple"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // maven配置
+        project.ext.mavenArtifactId = "common-library"
+        project.ext.mavenVersionName = defaultConfig.versionName
+        //        project.ext.mavenIsRelease = true
     }
 
     buildTypes {
@@ -22,28 +27,34 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.android.support:recyclerview-v7:27.1.1'
-
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
     // 黄油刀
     api 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // rx全家桶
-    api 'io.reactivex.rxjava2:rxjava:2.2.3'
-    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    api "io.reactivex.rxjava2:rxjava:2.2.6"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
     // glide
-    api 'com.github.bumptech.glide:glide:4.8.0'
+    api 'com.github.bumptech.glide:glide:4.7.1'
     // gson
-    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.google.code.gson:gson:2.8.2'
     // okgo
     api 'com.lzy.net:okgo:3.0.4'
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    // Fragmentation
+    api 'me.yokeyword:fragmentation:1.3.7'
+    // eventbus
+    api 'org.greenrobot:eventbus:3.1.1'
     // LogPlus
     api 'com.github.licheedev.SomeLibrary:myutils:0.02'
     // 比例控件，可选
-    api 'com.github.licheedev.SomeLibrary:rateview:0.02'
+    api 'com.github.licheedev.SomeLibrary:rateview:0.04'
+    
 }
 
 // 应用maven脚本

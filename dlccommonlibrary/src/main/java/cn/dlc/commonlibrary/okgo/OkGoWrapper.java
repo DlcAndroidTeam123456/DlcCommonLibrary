@@ -564,7 +564,7 @@ public class OkGoWrapper {
      */
     public <T> Observable<T> rxGet(String url, @Nullable HttpParams params,
         @android.support.annotation.NonNull MyConverter<T> converter) {
-        return rxGet(url, params, converter);
+        return rxGet(url, null, params, converter);
     }
 
     /**

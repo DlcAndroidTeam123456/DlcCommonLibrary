@@ -1,6 +1,5 @@
 package cn.dlc.commonlibrary.utils.rv_tool;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DimenRes;
@@ -9,7 +8,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import cn.dlc.commonlibrary.R;
 import cn.dlc.commonlibrary.utils.rv_tool.decorations.grid.SpacesItemDecoration;
 import cn.dlc.commonlibrary.utils.rv_tool.decorations.linear.HorizontalSpace;
@@ -151,36 +149,5 @@ public class RecyclerViewUtil {
      */
     public static void setNestedScrolling(RecyclerView recyclerView, boolean enable) {
         ViewCompat.setNestedScrollingEnabled(recyclerView, enable);
-    }
-
-    //限制加载的item数量,加载到一定数量就变成滑动
-    public void setLayoutManager(RecyclerView recyclerView, Activity activity, final int num) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity) {
-            @Override
-            public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,
-                int widthSpec, int heightSpec) {
-                int count = state.getItemCount();
-                if (count > 0) {
-                    if (count > num) {
-                        count = num;
-                    }
-                    int realHeight = 0;
-                    int realWidth = 0;
-                    for (int i = 0; i < count; i++) {
-                        View view = recycler.getViewForPosition(0);
-                        if (view != null) {
-                            measureChild(view, widthSpec, heightSpec);
-                            int measuredWidth = View.MeasureSpec.getSize(widthSpec);
-                            int measuredHeight = view.getMeasuredHeight();
-                            realWidth = realWidth > measuredWidth ? realWidth : measuredWidth;
-                            realHeight += measuredHeight;
-                        }
-                        setMeasuredDimension(realWidth, realHeight);
-                    }
-                } else {
-                    super.onMeasure(recycler, state, widthSpec, heightSpec);
-                }
-            }
-        });
     }
 }
