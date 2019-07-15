@@ -34,7 +34,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     
     implementation project(':dlccommonlibrary')
-//    implementation 'com.gitee.dlcandroid:DlcCommonLibrary:1.0.28-test1'
+//    implementation 'com.gitee.dlcandroid:DlcCommonLibrary:1.0.28'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     
 }
