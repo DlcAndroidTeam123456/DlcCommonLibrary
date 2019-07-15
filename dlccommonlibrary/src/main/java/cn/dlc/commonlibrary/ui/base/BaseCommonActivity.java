@@ -35,12 +35,22 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
      */
     protected boolean mActivityResumed;
 
+
+    /**
+     * 获取布局xml的id, 子类实现，可以为0
+     *
+     * @return
+     */
+    @LayoutRes
+    protected abstract int getLayoutId();
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         beforeSetContentView();
-        if (getLayoutID() != 0) {// 子类设置布局id使用,
-            setContentView(getLayoutID());
+        if (getLayoutId() != 0) {// 子类设置布局id使用,
+            setContentView(getLayoutId());
         }
 
         if (useButterKnife()) {
@@ -138,14 +148,6 @@ public abstract class BaseCommonActivity extends RxAppCompatActivity implements 
     protected boolean useButterKnife() {
         return true;
     }
-
-    /**
-     * 获取布局xml的id, 子类实现，可以为0
-     *
-     * @return
-     */
-    @LayoutRes
-    protected abstract int getLayoutID();
 
     @Override
     public Activity getActivity() {

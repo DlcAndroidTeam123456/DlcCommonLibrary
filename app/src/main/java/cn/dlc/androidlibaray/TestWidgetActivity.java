@@ -11,7 +11,7 @@ public class TestWidgetActivity extends BaseActivity {
     TitleBar mTitleBar;
 
     @Override
-    protected int getLayoutID() {
+    protected int getLayoutId() {
         return R.layout.activity_test_widget;
     }
 

@@ -28,7 +28,7 @@
 //    private DlcPlayer mDlcPlayer;
 //
 //    @Override
-//    protected int getLayoutID() {
+//    protected int getLayoutId() {
 //        return R.layout.activity_player;
 //    }
 //

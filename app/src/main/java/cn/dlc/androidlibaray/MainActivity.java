@@ -15,7 +15,7 @@ public class MainActivity extends BaseActivity {
     Button mBtnPlayer;
 
     @Override
-    protected int getLayoutID() {
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
