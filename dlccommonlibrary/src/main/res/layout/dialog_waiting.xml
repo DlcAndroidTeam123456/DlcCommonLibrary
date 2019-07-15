@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_waiting_dialog_bg"
+    android:gravity="center"
+    android:minHeight="@dimen/waiting_dialog_min_size"
+    android:minWidth="@dimen/waiting_dialog_min_size"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="@style/WaitingProgressBar"
+        android:layout_width="@dimen/waiting_dialog_pb_size"
+        android:layout_height="@dimen/waiting_dialog_pb_size"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/waiting_dialog_message_margin"
+        android:gravity="center"
+        android:textColor="@color/waiting_dialog_message_color"
+        android:textSize="@dimen/waiting_dialog_message_size"
+        tools:text="@string/waiting_dialog_default_message" />
+
+
+</LinearLayout>

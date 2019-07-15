@@ -1,0 +1,13 @@
+<resources>
+
+
+    <!--状态栏透明的主题，-->
+    <style name="TranslucentStatus" parent="CommonTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="ForDesignWithTranslucentStatus" parent="CommonTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+</resources>

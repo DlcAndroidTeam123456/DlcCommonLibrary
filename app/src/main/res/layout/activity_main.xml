@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.dlc.androidlibaray.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <cn.dlc.commonlibrary.ui.widget.status.StatusHolderView
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <Button
+            android:id="@+id/btn_widget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试控件" />
+
+        <Button
+            android:id="@+id/btn_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试播放器" />
+
+        <cn.dlc.commonlibrary.ui.widget.SearchWidget
+            android:imeOptions="actionSearch"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:hint="请输入城市名或拼音"
+            android:text="不不要"
+            android:inputType="number" />
+
+
+    </LinearLayout>
+
+</ScrollView>

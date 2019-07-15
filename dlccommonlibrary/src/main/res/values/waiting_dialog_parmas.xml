@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--背景颜色-->
+    <color name="waiting_dialog_bg_color">#7f000000</color>
+    <!--背景圆角半径-->
+    <dimen name="waiting_dialog_bg_radius">16dp</dimen>
+
+    <dimen name="waiting_dialog_pb_size">40dp</dimen>
+
+    <dimen name="waiting_dialog_min_size">130dp</dimen>
+
+    <!--文字颜色-->
+    <color name="waiting_dialog_message_color">#dadada</color>
+    <!--文字大小-->
+    <dimen name="waiting_dialog_message_size">16dp</dimen>
+    <!--文字周围空白-->
+    <dimen name="waiting_dialog_message_margin">12dp</dimen>
+    <!--默认文字-->
+    <string name="waiting_dialog_default_message">Loading...</string>
+
+
+    <style name="WaitingProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint" tools:targetApi="lollipop">#dadada</item>
+        <item name="android:indeterminateTintMode" tools:targetApi="lollipop">src_atop</item>
+    </style>
+
+    <style name="WaitingDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+
+</resources>

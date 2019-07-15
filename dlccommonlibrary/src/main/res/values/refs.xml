@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--默认点击背景-->
+    <item name="clickable_bg" type="drawable">@drawable/selector_default_pressed</item>
+    <!--无边界主题色的点击背景，低版本为无颜色-->
+    <item name="clickable_bg_borderless" type="drawable">@drawable/selector_transparent
+    </item>
+    <!--方形按钮点击背景-->
+    <item name="clickable_bg_item" type="drawable">@drawable/selector_default_pressed</item>
+    <!--未点击时，颜色为白色，点击后变暗-->
+    <item name="clickable_bg_white" type="drawable">@drawable/selector_default_white_pressed</item>
+    <!--低版本为透明，高版本为涟漪效果-->
+    <item name="clickable_trans" type="drawable">@drawable/selector_transparent</item>
+</resources>

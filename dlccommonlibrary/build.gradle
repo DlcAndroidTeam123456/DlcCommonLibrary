@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+
+android {
+
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 3
+        versionName "1.0.28"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:recyclerview-v7:27.1.1'
+
+    // 黄油刀
+    api 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    // rx全家桶
+    api 'io.reactivex.rxjava2:rxjava:2.2.3'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    // glide
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    // gson
+    api 'com.google.code.gson:gson:2.8.5'
+    // okgo
+    api 'com.lzy.net:okgo:3.0.4'
+    // LogPlus
+    api 'com.github.licheedev.SomeLibrary:myutils:0.02'
+    // 比例控件，可选
+    api 'com.github.licheedev.SomeLibrary:rateview:0.02'
+}
+
+// 应用maven脚本
+apply from: '../jitpack.gradle'

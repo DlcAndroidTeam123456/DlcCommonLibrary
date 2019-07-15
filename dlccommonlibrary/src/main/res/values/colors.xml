@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="baseColorPrimary">#3F51B5</color>
+    <color name="baseColorPrimaryDark">#303F9F</color>
+    <color name="baseColorAccent">#FF4081</color>
+
+    <color name="default_on_pressed">#33aaaaaa</color>
+    <color name="default_on_pressed_no_alpha">#ededed</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="line_color">#dadada</color>
+    <color name="dark_status">#3D3D3D</color>
+
+</resources>

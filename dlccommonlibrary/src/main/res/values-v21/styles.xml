@@ -1,0 +1,15 @@
+<resources>
+
+
+    <!--状态栏透明的主题,只设置了状态栏颜色透明，没有沉浸状态栏，需要在Activity里面调用cn.dlc.commonlibrary.ui.base.BaseCommonActivity.setTranslucentStatus-->
+
+    <style name="TranslucentStatus" parent="CommonTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">#00FFFFFF</item>
+    </style>
+
+    <style name="ForDesignWithTranslucentStatus" parent="CommonTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+</resources>

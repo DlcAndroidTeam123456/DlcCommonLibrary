@@ -1,0 +1,51 @@
+<resources>
+
+    <!--这个是让按钮无阴影-->
+    <!--<item name="android:buttonStyle">?android:attr/borderlessButtonStyle</item>-->
+
+    <!--禁止按钮上的文本自动大写，在APP主题中加入-->
+    <!--<item name="android:textAppearanceButton">@style/ButtonTextStyle</item>-->
+    <style name="ButtonTextStyle" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!--基础的主题，英文的按钮不会自动变大写-->
+    <style name="CommonTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/baseColorPrimary</item>
+        <item name="colorPrimaryDark">@color/baseColorPrimaryDark</item>
+        <item name="colorAccent">@color/baseColorAccent</item>
+        <item name="android:textAppearanceButton">@style/ButtonTextStyle</item>
+    </style>
+
+    <!--状态栏透明的主题-->
+    <style name="TranslucentStatus" parent="CommonTheme" />
+
+    <!--编辑用的时候可以切换的主题，这时候会沉浸状态栏-->
+    <style name="ForDesignWithTranslucentStatus" parent="CommonTheme" />
+
+
+    <!--通用对话框主题-->
+    <style name="CommonDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--让特定尺寸的对话框可以居中显示，并且设置的尺寸有效 todo 下面这句有问题，会导致padding失效，未知错乱等-->
+        <!--<item name="android:layout_gravity">center</item>-->
+    </style>
+
+    <style name="PopupStyle" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
+    </style>
+
+</resources>
