@@ -319,7 +319,7 @@ public abstract class BaseCommonActivity extends BaseFragmentationActivity
     /**
      * 隐藏状态栏和导航栏
      */
-    private void hideSystemUI() {
+    protected void hideSystemUI() {
 
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -339,7 +339,7 @@ public abstract class BaseCommonActivity extends BaseFragmentationActivity
     /**
      * 显示状态栏和导航栏
      */
-    private void showSystemUI() {
+    protected void showSystemUI() {
         // Shows the system bars by removing all the flags
         // except for the ones that make the content appear under the system bars.
         View decorView = getWindow().getDecorView();

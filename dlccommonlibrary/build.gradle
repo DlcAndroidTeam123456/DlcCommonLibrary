@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 4
-        versionName "1.0.29.2-simple"
+        versionName "1.0.29.3-simple"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // maven配置
