@@ -9,6 +9,6 @@ allprojects {
 }
 
 dependencies {
-        implementation 'com.gitee.dlcandroid:DlcCommonLibrary:1.0.30-simple'
+        implementation 'com.github.DlcAndroidTeam123456:DlcCommonLibrary:1.0.30-simple'
 }
 ```
