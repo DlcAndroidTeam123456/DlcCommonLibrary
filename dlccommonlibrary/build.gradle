@@ -47,8 +47,7 @@ dependencies {
     // 比例控件，可选
     api 'com.github.licheedev.SomeLibrary:rateview:0.04'
     // okgo二次封装
-    api 'com.gitee.dlcandroid:OkGoWrapper:1.0.0'
-    
+    api 'com.github.DlcAndroidTeam123456:OkGoWrapper:1.0.0'    
 }
 
 // 应用maven脚本
