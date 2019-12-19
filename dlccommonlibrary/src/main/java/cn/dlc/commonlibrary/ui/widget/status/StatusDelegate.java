@@ -14,9 +14,7 @@ public class StatusDelegate {
     }
 
     public StatusDelegate(Context context, boolean fitStatusBar) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        mStatusHeight = resources.getDimensionPixelSize(resourceId);
+        mStatusHeight = getStatusHeight(context);
 
         mFitStatusBar = fitStatusBar;
     }
@@ -59,5 +57,29 @@ public class StatusDelegate {
      */
     public boolean toFitStatusBar() {
         return isFitStatusBar() & canTranslucentStatus();
+    }
+
+    private int getStatusHeight(Context context) {
+        int result = 0;
+        try {
+            Resources resources = context.getResources();
+            int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                int sizeOne = context.getResources().getDimensionPixelSize(resourceId);
+                int sizeTwo = Resources.getSystem().getDimensionPixelSize(resourceId);
+
+                if (sizeTwo >= sizeOne) {
+                    return sizeTwo;
+                } else {
+                    float densityOne = context.getResources().getDisplayMetrics().density;
+                    float densityTwo = Resources.getSystem().getDisplayMetrics().density;
+                    float f = sizeOne * densityTwo / densityOne;
+                    return (int) ((f >= 0) ? (f + 0.5f) : (f - 0.5f));
+                }
+            }
+        } catch (Resources.NotFoundException ignored) {
+            return 0;
+        }
+        return result;
     }
 }
