@@ -2,7 +2,6 @@ package cn.dlc.commonlibrary.ui.widget.status;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -58,7 +57,7 @@ public class StatusHolderView extends View {
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public StatusHolderView(Context context, @Nullable AttributeSet attrs, int defStyleAttr,
-        int defStyleRes) {
+                            int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
@@ -69,13 +68,9 @@ public class StatusHolderView extends View {
      * @param context
      */
     private void init(Context context) {
-        try {
-            Resources resources = context.getResources();
-            int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-            mStatusHeight = resources.getDimensionPixelSize(resourceId);
-        } catch (Resources.NotFoundException e) {
-            //e.printStackTrace();
-        }
+
+        StatusDelegate statusDelegate = new StatusDelegate(context);
+        mStatusHeight = statusDelegate.getStatusHeight();
     }
 
     @Override
